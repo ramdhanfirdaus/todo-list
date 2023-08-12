@@ -1,14 +1,19 @@
 language: node_js
 node_js:
   - 14
+branches:
+  only:
+    - main # Set the branch you want to trigger CI/CD for
 
 cache:
   directories:
     - node_modules
 
-before_script:
-  - npm install -g @nestjs/cli
+before_install:
+  - npm install -g npm@latest
+
+install:
+  - npm install
 
 script:
-  - npm install
-  - nest build
+  - npm run build
