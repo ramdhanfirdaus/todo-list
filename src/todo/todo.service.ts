@@ -23,9 +23,16 @@ export class TodoService {
         return this.prisma.todo.delete({where: {id}});
     }
 
-    async sortFilterTodos(title: string, createdAt: string, status: string, dueDate: string) {
-        let where = {};
-        let orderBy = {};
+    async sortFilterTodos(filters: {
+        title?: string;
+        status?: string;
+        createdAt?: string;
+        dueDate?: string;
+    }) {
+        const { title, status, createdAt, dueDate } = filters;
+
+        const where = {};
+        const orderBy = {};
 
         if (title) {
             where['title'] = {
@@ -46,9 +53,6 @@ export class TodoService {
             orderBy['dueDate'] = dueDate
         }
 
-        console.log(where)
-        console.log(orderBy)
-
         return this.prisma.todo.findMany({
             where,
             orderBy,
@@ -59,5 +63,17 @@ export class TodoService {
         const updateTodoDto = await this.getTodo(id);
         updateTodoDto.completed = !updateTodoDto.completed
         return this.prisma.todo.update({where: {id}, data: updateTodoDto});
+    }
+
+    async searchTitleTodos(title: string) {
+        return this.sortFilterTodos({ title });
+    }
+
+    async filterStatusTodos(status: string) {
+        return this.sortFilterTodos({ status });
+    }
+
+    async sortingTodos(createdAt: string, dueDate: string) {
+        return this.sortFilterTodos({ createdAt, dueDate });
     }
 }

@@ -23,7 +23,33 @@ export class TodoController {
         @Query('status') status: string,
         @Query('dueDate') dueDate: string,
     ) {
-        return this.todoService.sortFilterTodos(title, createdAt, status, dueDate);
+        return this.todoService.sortFilterTodos({title, createdAt, status, dueDate});
+    }
+
+    @Get('/title')
+    @ApiQuery({name:"title", required:false})
+    searchTitleTodos(
+        @Query('title') title: string,
+    ) {
+        return this.todoService.searchTitleTodos(title);
+    }
+
+    @Get('/status')
+    @ApiQuery({name:"status", enum: [ "true", "false"], required:false})
+    filterStatusTodos(
+        @Query('status') status: string,
+    ) {
+        return this.todoService.filterStatusTodos(status);
+    }
+
+    @Get('/status')
+    @ApiQuery({name:"createdAt", enum: [ "asc", "desc"], required:false})
+    @ApiQuery({name:"dueDate", enum: [ "asc", "desc"], required:false})
+    sortingTodos(
+        @Query('createdAt') createdAt: string,
+        @Query('dueDate') dueDate: string,
+    ) {
+        return this.todoService.sortingTodos(createdAt, dueDate);
     }
 
     @Get('/:id')
@@ -46,7 +72,6 @@ export class TodoController {
 
     @Delete(':id')
     deleteTodo(@Param('id') id: string) {
-        console.log(id)
         const todoId = parseInt(id);
         return this.todoService.deleteTodo(todoId);
     }
