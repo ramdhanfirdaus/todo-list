@@ -26,7 +26,7 @@ export class TodoController {
         return this.todoService.sortFilterTodos({title, createdAt, status, dueDate});
     }
 
-    @Get('/title')
+    @Get('/serach-title')
     @ApiQuery({name:"title", required:false})
     searchTitleTodos(
         @Query('title') title: string,
@@ -34,7 +34,7 @@ export class TodoController {
         return this.todoService.searchTitleTodos(title);
     }
 
-    @Get('/status')
+    @Get('/filter-status')
     @ApiQuery({name:"status", enum: [ "true", "false"], required:false})
     filterStatusTodos(
         @Query('status') status: string,
@@ -42,7 +42,7 @@ export class TodoController {
         return this.todoService.filterStatusTodos(status);
     }
 
-    @Get('/status')
+    @Get('/filter')
     @ApiQuery({name:"createdAt", enum: [ "asc", "desc"], required:false})
     @ApiQuery({name:"dueDate", enum: [ "asc", "desc"], required:false})
     sortingTodos(
