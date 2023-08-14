@@ -14,6 +14,10 @@ export class TodoService {
         return this.prisma.todo.findUnique({where: {id}});
     }
 
+    async getAllTodo() {
+        return this.prisma.todo.findMany();
+    }
+
     async updateTodo(id: number, updateTodoDto: UpdateTodoDto) {
         return this.prisma.todo.update({where: {id}, data: updateTodoDto});
     }
