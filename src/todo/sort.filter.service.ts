@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma.service";
 
 interface TodoSortFilters {
     title?: string;
@@ -17,14 +17,14 @@ export class SortFilterTodoService {
         const where: any = {};
 
         if (title) {
-            where['title'] = {
+            where["title"] = {
                 contains: title,
-                mode: 'insensitive',
+                mode: "insensitive",
             };
         }
 
         if (status !== undefined) {
-            where['completed'] = status === 'true';
+            where["completed"] = status === "true";
         }
 
         return where;
