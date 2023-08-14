@@ -32,14 +32,14 @@ export class SortFilterTodoService {
 
     private buildOrderByClause(filters: TodoSortFilters) {
         const { createdAt, dueDate } = filters;
-        const orderBy: any = {};
+        const orderBy = [];
 
         if (createdAt) {
-            orderBy['createdAt'] = createdAt;
+            orderBy.push({ createdAt: createdAt })
         }
 
         if (dueDate) {
-            orderBy['dueDate'] = dueDate;
+            orderBy.push({ dueDate: dueDate })
         }
 
         return orderBy;
