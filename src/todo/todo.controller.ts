@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { SortFilterTodoService } from "./sort.filter.service.spec";
+import { SortFilterTodoService } from "./sort.filter.service";
 import { CreateTodoDto, UpdateTodoDto } from './dto';
 import { ApiQuery } from '@nestjs/swagger';
 
