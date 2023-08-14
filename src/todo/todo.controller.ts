@@ -1,11 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
 import { TodoService } from './todo.service';
+import { SortFilterTodoService } from "./sort.filter.service.spec";
 import { CreateTodoDto, UpdateTodoDto } from './dto';
 import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('todo')
 export class TodoController {
-    constructor(private readonly todoService: TodoService) {}
+    constructor(private readonly todoService: TodoService,
+                private readonly sortFilterTodoService: SortFilterTodoService) {}
 
     @Post()
     createTodo(@Body() createTodoDto: CreateTodoDto) {
@@ -23,7 +25,7 @@ export class TodoController {
         @Query('status') status: string,
         @Query('dueDate') dueDate: string,
     ) {
-        return this.todoService.sortFilterTodos({title, createdAt, status, dueDate});
+        return this.sortFilterTodoService.sortFilterTodos({title, createdAt, status, dueDate});
     }
 
     @Get('/serach-title')
@@ -31,7 +33,7 @@ export class TodoController {
     searchTitleTodos(
         @Query('title') title: string,
     ) {
-        return this.todoService.searchTitleTodos(title);
+        return this.sortFilterTodoService.searchTitleTodos(title);
     }
 
     @Get('/filter-status')
@@ -39,7 +41,7 @@ export class TodoController {
     filterStatusTodos(
         @Query('status') status: string,
     ) {
-        return this.todoService.filterStatusTodos(status);
+        return this.sortFilterTodoService.filterStatusTodos(status);
     }
 
     @Get('/filter')
@@ -49,7 +51,7 @@ export class TodoController {
         @Query('createdAt') createdAt: string,
         @Query('dueDate') dueDate: string,
     ) {
-        return this.todoService.sortingTodos(createdAt, dueDate);
+        return this.sortFilterTodoService.sortingTodos(createdAt, dueDate);
     }
 
     @Get('/:id')
